@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Move tracker: Luton to Reading, 27/11/2026</title>
+<style>
+:root{
+  --bg:#f5f6f4; --card:#fff; --ink:#1d2421; --muted:#5d6a64; --line:#dfe4e0;
+  --accent:#2f6f4f; --accent-soft:#e6f1ea; --red:#b3261e; --red-soft:#fbe9e7;
+  --amber:#8a5a00; --amber-soft:#fff3d6; --blue:#1f5f9e; --blue-soft:#e4effa;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:#17352a;color:#f4f7f5;padding:18px 24px}
+header .row{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+header h1{margin:0;font-size:20px;font-weight:650}
+header p{margin:2px 0 0;color:#b9cfc4;font-size:13px}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tools button{background:transparent;color:#f4f7f5;border:1px solid #4c6b5d;border-radius:6px;padding:6px 10px;cursor:pointer;font:inherit;font-size:13px}
+.tools button:hover{background:#24493a}
+#saved{font-size:12px;color:#b9cfc4;min-width:60px}
+nav{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+nav .row{max-width:1100px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;padding:0 12px}
+nav button{background:none;border:0;border-bottom:3px solid transparent;padding:12px 14px;font:inherit;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap}
+nav button.on{color:var(--accent);border-bottom-color:var(--accent)}
+main{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+.tab{display:none}.tab.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+.card h2{margin:0 0 10px;font-size:16px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.hero{display:flex;flex-wrap:wrap;gap:24px;align-items:center}
+.big{font-size:44px;font-weight:700;line-height:1;color:var(--accent)}
+.hero .lbl{color:var(--muted);font-size:13px}
+.bar{height:10px;background:#e8ece9;border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.catrow{display:grid;grid-template-columns:1fr auto;gap:2px 10px;margin-bottom:10px;font-size:13px}
+.catrow .bar{grid-column:1/-1;height:7px}
+.muted{color:var(--muted)}
+.chip{display:inline-block;font-size:11.5px;font-weight:600;padding:1px 8px;border-radius:99px;background:#eef1ef;color:#44514b;white-space:nowrap}
+.chip.c{background:var(--red-soft);color:var(--red)}
+.chip.h{background:var(--amber-soft);color:var(--amber)}
+.chip.over{background:var(--red);color:#fff}
+.chip.blue{background:var(--blue-soft);color:var(--blue)}
+.chip.ok{background:var(--accent-soft);color:var(--accent)}
+.alertbox{border-left:4px solid var(--red);background:var(--red-soft);padding:10px 14px;border-radius:6px;margin-bottom:16px}
+.alertbox strong{color:var(--red)}
+ul.plain{list-style:none;margin:0;padding:0}
+ul.plain li{padding:7px 0;border-top:1px solid var(--line);display:flex;gap:8px;align-items:baseline;justify-content:space-between;flex-wrap:wrap}
+ul.plain li:first-child{border-top:0}
+a.lnk{color:var(--blue);cursor:pointer;text-decoration:none}
+a.lnk:hover{text-decoration:underline}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.toolbar input,.toolbar select,input[type=text],input[type=password],input[type=date],select,textarea{font:inherit;font-size:14px;padding:6px 8px;border:1px solid #c9d1cc;border-radius:6px;background:#fff;color:var(--ink)}
+.toolbar input[type=search]{flex:1;min-width:180px;font:inherit;padding:6px 8px;border:1px solid #c9d1cc;border-radius:6px}
+button.btn{font:inherit;font-size:14px;padding:6px 12px;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:6px;cursor:pointer}
+button.btn.ghost{background:#fff;color:var(--accent)}
+button.btn.danger{border-color:var(--red);color:var(--red);background:#fff}
+details.task{background:#fff;border:1px solid var(--line);border-radius:8px;margin-bottom:8px}
+details.task.done{opacity:.62}
+details.task[open]{border-color:#b7c7be}
+details.task summary{list-style:none;cursor:pointer;display:flex;gap:10px;align-items:center;padding:9px 12px;flex-wrap:wrap}
+details.task summary::-webkit-details-marker{display:none}
+.tick{width:22px;height:22px;border-radius:50%;border:2px solid #9aa9a1;background:#fff;cursor:pointer;flex:none;padding:0;display:grid;place-items:center;color:#fff;font-size:13px;line-height:1}
+.tick.done{background:var(--accent);border-color:var(--accent)}
+.tick.doing{border-color:var(--blue);background:var(--blue-soft)}
+.tick.na{border-style:dashed}
+.ttl{flex:1;min-width:200px;font-weight:600}
+details.task.done .ttl{text-decoration:line-through}
+.meta{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.body{padding:2px 14px 14px 44px;border-top:1px solid var(--line)}
+.body p{margin:10px 0 6px}
+.body .cond{background:var(--blue-soft);border-radius:6px;padding:6px 10px;font-size:13.5px;margin:8px 0}
+.body .ctrl{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.body textarea{width:100%;min-height:54px}
+.links a{margin-right:12px;font-size:13.5px;color:var(--blue)}
+.sec{margin:20px 0 8px;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.docrow{display:grid;grid-template-columns:150px 1fr 1fr;gap:8px 14px;padding:10px 0;border-top:1px solid var(--line);align-items:start}
+.docrow:first-child{border-top:0}
+.docrow .n{font-weight:600}
+.docrow .why{font-size:13px;color:var(--muted)}
+.docrow input[type=text]{width:100%}
+@media(max-width:720px){.docrow{grid-template-columns:1fr}}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px 16px}
+.form label{display:block;font-size:12.5px;font-weight:600;color:var(--muted)}
+.form input{width:100%;margin-top:3px;font-weight:400;color:var(--ink)}
+table.m{width:100%;border-collapse:collapse;font-size:14px}
+table.m th{text-align:left;font-size:12px;color:var(--muted);padding:6px 6px}
+table.m td{padding:4px 6px;border-top:1px solid var(--line)}
+table.m input{width:100%}
+dialog{border:1px solid var(--line);border-radius:12px;padding:20px 22px;max-width:560px;width:calc(100% - 32px);box-shadow:0 12px 40px rgba(0,0,0,.25)}
+dialog::backdrop{background:rgba(20,30,25,.45)}
+#syncStat{font-size:12px;color:#b9cfc4}
+#syncStat.err{color:#ffb4a9}
+.guide h3{margin:18px 0 6px;font-size:15px}
+table.t{width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0}
+table.t th{text-align:left;font-size:12px;color:var(--muted);padding:6px 8px;border-bottom:2px solid var(--line)}
+table.t td{vertical-align:top;padding:8px;border-bottom:1px solid var(--line)}
+.guide textarea{font:inherit;font-size:13px}
+@media(max-width:720px){table.t{display:block;overflow-x:auto}}
+.guide p,.guide li{margin:6px 0}
+.guide ul{padding-left:20px}
+.tag{font-size:11px;font-weight:700;padding:1px 7px;border-radius:99px;margin-left:4px;white-space:nowrap}
+.tag.v{background:var(--accent-soft);color:var(--accent)}
+.tag.k{background:var(--amber-soft);color:var(--amber)}
+.tag.x{background:var(--red-soft);color:var(--red)}
+.note{font-size:13px;color:var(--muted)}
+.warn{font-size:13px;background:var(--amber-soft);color:var(--amber);padding:8px 12px;border-radius:6px;margin-bottom:14px}
+@media print{
+  header .tools,nav,.toolbar,.noprint{display:none!important}
+  body{background:#fff}.tab{display:none!important}.tab.on{display:block!important}
+  details.task{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="row">
+    <div>
+      <h1>Move tracker: Luton to Reading</h1>
+      <p id="hdrSub"></p>
+    </div>
+    <div class="tools">
+      <span id="saved"></span>
+      <span id="syncStat" title="Cross-device sync status"></span>
+      <button id="btnSync" title="Sync this tracker across your devices through a private GitHub Gist">Sync</button>
+      <button id="btnExport" title="Download a backup of all your data">Export backup</button>
+      <button id="btnImport">Import backup</button>
+      <button id="btnPrint">Print</button>
+      <button id="btnReset">Reset</button>
+      <input type="file" id="fileImport" accept="application/json" hidden>
+    </div>
+  </div>
+</header>
+<dialog id="syncDlg">
+  <form method="dialog" style="margin:0" onkeydown="if(event.key==='Enter'&&event.target.tagName==='INPUT')event.preventDefault()">
+    <h2 style="margin:0 0 6px;font-size:18px">Sync across devices</h2>
+    <p class="note" style="margin:0 0 10px">Your data is stored in one GitHub Gist that only you can write to. GitHub gists cannot be truly private, only "secret": anyone who has the gist link can read it. The passphrase below encrypts the data in your browser before upload, so the gist is unreadable without it. Use a passphrase.</p>
+    <div id="syncSteps" class="note" style="margin-bottom:10px">
+      <strong>First device:</strong> 1) <a class="lnk" href="https://github.com/settings/tokens/new?scopes=gist&amp;description=move-tracker" target="_blank" rel="noopener">create a token with only the gist scope</a>, 2) paste it and choose a passphrase below, 3) press Create and connect.<br>
+      <strong>Other devices:</strong> open this page, paste the same token and passphrase, enter the gist ID (or use the setup link), press Connect.
+    </div>
+    <div class="form" style="grid-template-columns:1fr">
+      <label>GitHub token (stored only in this browser)<input type="password" id="sy_token" autocomplete="off"></label>
+      <label>Passphrase for encryption (stored only in this browser)<input type="password" id="sy_pass" autocomplete="off"></label>
+      <label>Gist ID (leave empty on the first device)<input type="text" id="sy_gist" autocomplete="off"></label>
+    </div>
+    <p id="sy_msg" class="note" style="min-height:1.4em;margin:10px 0"></p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button type="button" class="btn" id="sy_create">Create gist and connect</button>
+      <button type="button" class="btn" id="sy_connect">Connect to existing gist</button>
+      <button type="button" class="btn ghost" id="sy_now">Sync now</button>
+      <button type="button" class="btn ghost" id="sy_link">Copy setup link</button>
+    </div>
+    <details style="margin-top:12px"><summary class="note" style="cursor:pointer">Advanced</summary>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+        <button type="button" class="btn ghost" id="sy_push">Replace cloud with this device</button>
+        <button type="button" class="btn ghost" id="sy_pull">Replace this device with cloud</button>
+        <button type="button" class="btn danger" id="sy_off">Disconnect this device</button>
+      </div>
+    </details>
+    <p style="margin:14px 0 0;text-align:right"><button class="btn ghost" value="close">Close</button></p>
+  </form>
+</dialog>
+<nav><div class="row" id="tabs">
+  <button data-tab="dash" class="on">Dashboard</button>
+  <button data-tab="tasks">Tasks</button>
+  <button data-tab="docs">Documents</button>
+  <button data-tab="info">Key info and meters</button>
+  <button data-tab="guide">Research notes</button>
+</div></nav>
+<main>
+  <div id="storageWarn" class="warn" hidden>Your browser is blocking local storage for this file, so changes will not persist. Use Export backup before closing, or open the file in Chrome or Edge.</div>
+
+  <section class="tab on" id="tab-dash"></section>
+
+  <section class="tab" id="tab-tasks">
+    <div class="toolbar">
+      <input type="search" id="fSearch" placeholder="Search tasks">
+      <select id="fCat"></select>
+      <select id="fStatus">
+        <option value="open">Open only</option>
+        <option value="all">All</option>
+        <option value="done">Done only</option>
+      </select>
+      <select id="fSort">
+        <option value="due">Sort by due date</option>
+        <option value="cat">Sort by category</option>
+      </select>
+      <button class="btn ghost" id="btnAddTask">Add task</button>
+    </div>
+    <div id="addTaskBox" class="card" hidden>
+      <div class="form">
+        <label>Title<input type="text" id="nt_title"></label>
+        <label>Category<select id="nt_cat" style="width:100%;margin-top:3px"></select></label>
+        <label>Due date<input type="date" id="nt_due"></label>
+      </div>
+      <p style="margin:12px 0 0"><button class="btn" id="btnSaveTask">Save task</button> <button class="btn ghost" id="btnCancelTask">Cancel</button></p>
+    </div>
+    <div id="taskList"></div>
+  </section>
+
+  <section class="tab" id="tab-docs">
+    <div class="warn">Track where each document is, not the document itself. Put the file path or folder name in "Where stored". Do not type passwords or full card numbers anywhere in this tracker.</div>
+    <div class="toolbar">
+      <select id="dFilter">
+        <option value="all">All documents</option>
+        <option value="open">Not yet have</option>
+        <option value="have">Have</option>
+      </select>
+      <button class="btn ghost" id="btnAddDoc">Add document</button>
+    </div>
+    <div id="addDocBox" class="card" hidden>
+      <div class="form">
+        <label>Document<input type="text" id="nd_name"></label>
+        <label>Section<select id="nd_sec" style="width:100%;margin-top:3px"></select></label>
+      </div>
+      <p style="margin:12px 0 0"><button class="btn" id="btnSaveDoc">Save document</button> <button class="btn ghost" id="btnCancelDoc">Cancel</button></p>
+    </div>
+    <div id="docList"></div>
+  </section>
+
+  <section class="tab" id="tab-info"></section>
+  <section class="tab" id="tab-guide"></section>
+</main>
+
+<script>
+"use strict";
+/* ---------- helpers ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const DAY = 864e5;
+const MOVE = new Date(2026, 10, 27, 12);
+const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const iso = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+const fromIso = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d, 12); };
+const fmt = s => fromIso(s).toLocaleDateString("en-GB", { weekday: "short", day: "2-digit", month: "2-digit", year: "numeric" });
+const todayIso = () => iso(new Date());
+const diffDays = (a, b) => Math.round((fromIso(a) - fromIso(b)) / DAY);
+const MOVE_ISO = iso(MOVE);
+
+/* ---------- reference data ---------- */
+const CATS = {
+  tenancy:  "Tenancy and agent",
+  utilities:"Utilities and internet",
+  council:  "Council and government",
+  money:    "Money, insurance, accounts",
+  health:   "Health and personal",
+  post:     "Post and subscriptions",
+  moveday:  "Packing and moving day"
+};
+const STATUS = { todo: "To do", doing: "In progress", done: "Done", na: "Not applicable" };
+const PRI = { c: "Critical", h: "High", n: "Normal" };
+
+const L = {
+  ofcom:   ["Ofcom broadband checker", "https://checker.ofcom.org.uk/"],
+  readingCT: ["Reading: tell us you are moving", "https://www.reading.gov.uk/council-tax/tell-us-you-are-moving"],
+  readingNew:["Reading: new resident guide", "https://www.reading.gov.uk/council-tax/getting-started-as-a-new-resident"],
+  bands:   ["Check a council tax band", "https://www.gov.uk/council-tax-bands"],
+  vote:    ["Register to vote", "https://www.gov.uk/register-to-vote"],
+  dvla:    ["Tell DVLA you have moved", "https://www.gov.uk/dvla-change-address"],
+  hmrc:    ["HMRC personal tax account", "https://www.gov.uk/personal-tax-account"],
+  tvl:     ["TV Licensing", "https://www.tvlicensing.co.uk/"],
+  thames:  ["Thames Water", "https://www.thameswater.co.uk/"],
+  energy:  ["Citizens Advice: moving home energy", "https://www.citizensadvice.org.uk/consumer/energy-supply/energy-and-your-home/moving-house/moving-home-gas-and-electricity-supplies/"],
+  rra:     ["GOV.UK: Renters' Rights Act overview for tenants", "https://www.gov.uk/guidance/renters-rights-act-overview-for-tenants"],
+  deposit: ["GOV.UK: tenancy deposit protection", "https://www.gov.uk/tenancy-deposit-protection"],
+  rtr:     ["GOV.UK: prove your right to rent", "https://www.gov.uk/prove-right-to-rent"],
+  rm:      ["Royal Mail redirection", "https://www.royalmail.com/START-YOUR-REDIRECTION"],
+  gp:      ["NHS: find a GP", "https://www.nhs.uk/service-search/find-a-gp"]
+};
+
+/* T(id, category, offsetDays from move date, priority, title, detail, {cond, links}) */
+const T = (id, cat, o, p, t, d, x = {}) => ({ id, cat, o, p, t, d, cond: x.cond, links: x.links || [] });
+const TASKS = [
+  /* ---- tenancy ---- */
+  T("t1","tenancy",-10,"h","Confirm the tenancy agreement is signed and saved; read the bills and permissions clauses",
+    "Check: periodic tenancy with no fixed term (new tenancies in England from 1 May 2026 are assured periodic), who pays council tax, water, energy and broadband, whether you may install broadband or other equipment, pets, notice terms, how to report repairs. Save a PDF copy somewhere you can reach on your phone.",{links:[L.rra]}),
+  T("t2","tenancy",-10,"h","Check every payment requested is within the legal limits",
+    "Holding deposit: max 1 week's rent. Security deposit: max 5 weeks' rent if annual rent is under 50,000 GBP. Rent in advance: max 1 month. No referencing or admin fees for tenants. Never pay to bank details sent by email alone: confirm by phoning the lettings agent on a number you found independently.",{links:[L.rra,L.deposit]}),
+  T("t3","tenancy",-3,"c","Set up the rent standing order and pay the move-in funds",
+    "Agree the first payment date and amount, then set up a standing order so rent lands before the due day every month. Keep the payment receipt for the deposit and first month's rent (see Documents)."),
+  T("t4","tenancy",-7,"h","Have Right to Rent evidence and references ready",
+    "Passport or biometric residence permit, or a share code for online checks. Employer reference or proof of income if the agent still needs it. Agent must see original documents or do an online check before the tenancy starts.",{links:[L.rtr]}),
+  T("t5","tenancy",-13,"c","Ask the lettings agent the set-up questions (this unblocks utilities)",
+    "Ask in one email so you have it in writing:\n1. Who supplies electricity and gas now, and which meters exist (electric, gas, prepayment or credit, smart or not, where they are)?\n2. Which bills, if any, are included in rent or service charge?\n3. Which broadband providers are already connected or installed in the building, and is landlord or freeholder permission needed for an install?\n4. Is there a lift, loading bay, resident parking or permit scheme?\n5. Freeholder or building manager contact, bin store, post boxes, stopcock and fuse box locations.\n6. Repair and out-of-hours emergency contacts.\n7. Check-in time, key count, and whether an inventory appointment is offered."),
+  T("t6","tenancy",-5,"h","Confirm key collection time and the check-in arrangements for 27/11",
+    "Get a time and place in writing. Ask whether the inventory is done with you or sent afterwards, and how many sets of keys and fobs there will be."),
+  T("t7","tenancy",-2,"h","Confirm you have the safety paperwork",
+    "You should receive before moving in: Energy Performance Certificate (EPC), gas safety certificate if there is any gas appliance, the government How to Rent guide, and evidence the electrics have been tested (EICR). Ask about smoke and carbon monoxide alarms and the fire arrangements for the building's shared areas."),
+  T("t8","tenancy",7,"h","Check the inventory and return it with comments and photos",
+    "Walk every room on 27/11 with dated photos before unpacking. Note marks, damp, broken fittings, appliance condition. Return the signed inventory with your comments inside the window the agent gives (often 7 days, check your agreement). This protects your deposit at the end."),
+  T("t9","tenancy",14,"h","Get the deposit protection certificate and prescribed information",
+    "The landlord or agent must protect the deposit in a government-approved scheme and give you the details within 30 days of you paying it. Count 30 days from the date you actually paid, which may be earlier than move day. Record the scheme and reference under Key info.",{links:[L.deposit]}),
+  T("t10","tenancy",1,"n","Save repair, emergency and building contacts in your phone",
+    "The agent (repairs and out of hours), landlord's details, freeholder or managing agent, gas emergency, electricity network operator."),
+
+  /* ---- utilities ---- */
+  T("u1","utilities",-14,"c","BROADBAND: check availability for the flat and place the order today",
+    "Install lead times are the single biggest risk in this move. Standard guidance ranges from 2 to 4 weeks, with some sources saying plan 6 to 8 weeks, and a new line or landlord permission can take longer.\n1. Check the Ofcom checker and the providers' own checkers for the new flat's address (Openreach-based providers, Virgin Media, and any full-fibre network that serves the building).\n2. Ask the agent whether the building already has a live line or fibre (a takeover of a live line is much faster than a new install).\n3. Pick the shortest-lead option, a 12 or 18 month term (you may move again; avoid 24 months), and request an install date on or as soon after 27/11 as possible.\n4. Do not rely on a single quote: if the earliest date is after mid-December, also do the Plan B task.",{links:[L.ofcom]}),
+  T("u2","utilities",-10,"h","BROADBAND Plan B: line up interim internet for the gap",
+    "Likely gap of days or weeks. Options: a 4G or 5G home router or SIM-only data plan on a short or rolling term, or your phone as a hotspot (check the data allowance). Decide now what you need for work and streaming so you are not buying in a rush on move day."),
+  T("u3","utilities",-12,"c","Identify the electricity and gas supplier and the meter types",
+    "Ask the agent first (task: set-up questions). If they cannot say, ask for the meter numbers: MPAN for electricity and MPRN for gas. A supplier or the national look-up services can identify the supplier from those. Also find out if it is a prepayment meter, which changes how you top up and how you switch.",{links:[L.energy]}),
+  T("u4","utilities",0,"c","Move day: photograph every meter reading before using anything",
+    "Electricity (both registers if it is Economy 7), gas, and water if there is a meter. Photograph the meter and the serial number with a visible timestamp. Send the readings to the agent and the supplier the same day. This is your evidence that previous usage is not yours. Log them under Key info and meters."),
+  T("u5","utilities",0,"c","Tell the energy supplier you have moved in and put the account in your name",
+    "Give your name, the move-in date, and the opening readings. Without this, you are on a deemed contract in the name of the occupier, usually a standard variable tariff and often the most expensive. Ask what tariff you are on and whether there are exit fees. Check your tenancy first: if you pay the bills directly you generally have the right to choose your own supplier.",{links:[L.energy]}),
+  T("u6","utilities",0,"h","Register with the water company in your name",
+    "RG1 Reading is believed to be in Thames Water's area for both supply and sewerage (confirm on their site with the postcode). You cannot choose a water supplier: register your name and move-in date, and ask whether the flat is metered. Skip if water is included in rent or service charge.",{links:[L.thames]}),
+  T("u7","utilities",10,"n","Compare energy tariffs and switch off the deemed contract",
+    "Once the account is live with the opening readings agreed, compare tariffs on an Ofgem-accredited comparison service and switch if your tenancy permits it. Switching normally completes within about 5 working days. Check for exit fees and prepayment restrictions first.",{cond:"Only if you pay the energy supplier directly."}),
+  T("u8","utilities",3,"h","Update or buy a TV Licence for the new address",
+    "A licence is tied to the address. If you were covered by someone else's licence at Luton, you need your own at the flat if you watch or record live TV or use BBC iPlayer.",{cond:"Only if you watch live TV or BBC iPlayer.",links:[L.tvl]}),
+  T("u9","utilities",14,"n","Set up Direct Debits and put the bill dates in your calendar",
+    "Energy, water, broadband, council tax. Spread the dates so they do not all hit right before payday. Keep the account references in Key info."),
+  T("u10","utilities",-3,"h","Confirm the broadband install date, building access, and that you will be home",
+    "Get the engineer window and what they need (landlord permission, access to a communal cupboard or riser, a socket location). Choose where the router will sit.",{cond:"Only once a broadband order has been placed."}),
+
+  /* ---- council and government ---- */
+  T("c1","council",-10,"c","Tell Reading Borough Council you are moving in (council tax)",
+    "Use the online form. You need your move date and tenancy start. Reading emails a council tax account number, and the council says that can take up to 21 working days, so submit now. Liability should run from 27/11, not from when the number arrives.",{links:[L.readingCT,L.readingNew]}),
+  T("c2","council",-10,"h","Check the council tax band for the flat",
+    "Look up the band on GOV.UK using the postcode. If it looks wrong compared with similar flats, you can ask the Valuation Office Agency to review it. There is a time limit after you become liable, so do not leave it for months.",{links:[L.bands]}),
+  T("c3","council",-9,"h","Apply for any council tax discount you are entitled to",
+    "Sole occupier discount (25%), student exemption, or support if you are on a low income. Apply on the same form or account; discounts are not automatic.",{cond:"Only if you live alone, are a student, or have a low income."}),
+  T("c4","council",21,"n","Set up council tax payment (Direct Debit) once you have the account number",
+    "Ask about spreading payments over 12 months instead of 10 if the default plan is 10."),
+  T("c6","council",1,"h","Register to vote at the new address",
+    "Takes about 5 minutes online and needs your National Insurance number. It also feeds your credit file. Do it after you have moved in.",{links:[L.vote]}),
+  T("c7","council",3,"h","Update your driving licence and vehicle log book (V5C)",
+    "Legal requirement, free. Do the licence online. If you own a vehicle, update the V5C and the vehicle tax Direct Debit address.",{cond:"Only if you hold a UK driving licence or own a vehicle.",links:[L.dvla]}),
+  T("c8","council",3,"n","Update your address with HMRC",
+    "Through your personal tax account or the HMRC app; you can only do this once you have moved. Also tell your employer so payslips and P60 go to the right place.",{links:[L.hmrc]}),
+  T("c9","council",2,"n","Find out about parking permits and bin collection days in Reading",
+    "Central Reading has controlled parking zones. Check whether the flat is eligible for a resident permit and how visitors park. Find your bin and recycling days on the Reading Borough Council site.",{cond:"Parking only if you have a vehicle or expect visitors by car."}),
+  T("c10","council",0,"n","Update benefits, student loan, child benefit, or other government payments",
+    "Any scheme that pays you or assesses you by address needs the move reported.",{cond:"Only if you receive Universal Credit, a student loan, child benefit, or similar."}),
+
+  /* ---- money ---- */
+  T("m1","money",0,"h","Update your address with your bank and every card, savings, and investment account",
+    "Usually in the app or online banking. Some need proof of address: your signed tenancy agreement and, later, the first council tax bill or a bank statement work. Do this on or just after move day, and keep a list of accounts you have finished."),
+  T("m2","money",-3,"h","Take out contents insurance for the flat, starting 27/11",
+    "The landlord's insurance does not cover your belongings or your liability for accidental damage in many cases. Get quotes on the new postcode and make sure cover begins on move day, including items in transit if you use removals."),
+  T("m3","money",-3,"h","Tell your car and any other insurer the new address",
+    "Premiums depend on the postcode, so tell them before 27/11 and expect a changed quote.",{cond:"Only if you have car, travel, life, or health insurance."}),
+  T("m4","money",0,"h","Update your employer, payroll, and pension provider",
+    "Payslips, P60, pension statements, workplace benefits."),
+  T("m5","money",3,"n","Update your mobile phone provider and other billing addresses",
+    "Mobile, TV, gym, apps with a billing address. Check you do not have a contract at Luton that now needs cancelling."),
+  T("m6","money",1,"n","Update delivery addresses on your main online accounts",
+    "Amazon, PayPal, eBay, Apple, Google, food delivery apps, courier accounts. Do this before you reorder anything."),
+  T("m7","money",7,"n","Review your Direct Debits and standing orders for old-address items",
+    "Cancel or move anything that still points at Luton."),
+  T("m8","money",30,"n","Check your credit reports show the new address and no errors",
+    "Registering to vote helps. Check all three agencies using a free service.",{cond:"Useful before any large credit application."}),
+
+  /* ---- health ---- */
+  T("h1","health",1,"h","Register with a GP in Reading",
+    "Find a practice whose catchment covers your new postcode and register with the online form or in person. Bring the tenancy agreement as proof of address even if not strictly required. Stay registered with the Luton GP until the new practice confirms.",{links:[L.gp]}),
+  T("h2","health",3,"n","Change your nominated pharmacy and repeat prescriptions",
+    "In the NHS App or with your GP.",{cond:"Only if you have repeat prescriptions."}),
+  T("h3","health",14,"n","Decide whether to keep or change your dentist and optician",
+    "Luton is far from Reading for routine visits. Find new practices or transfer."),
+  T("h4","health",3,"n","Send your new address to family, friends, clubs, gym, and loyalty schemes",
+    "Plus any charities, magazines, or memberships."),
+
+  /* ---- post ---- */
+  T("p1","post",-5,"h","Set up Royal Mail redirection from Luton to Reading",
+    "Royal Mail's own page lists 45 GBP for 3 months, 66.50 GBP for 6 months, and 95 GBP for 12 months for the lead applicant (verify at checkout). You will need ID and a payment card, and a start date. Apply at least a week ahead. It is a safety net, not a substitute for updating each organization.",{links:[L.rm]}),
+  T("p2","post",7,"n","Update magazines, subscriptions, charities, and shops that post to you",
+    "Anything not covered above."),
+  T("p3","post",75,"n","Reminder: extend or let the Royal Mail redirection lapse",
+    "Redirections end after the period you bought. Check that important senders have your new address before it lapses, and extend if not."),
+
+  /* ---- moving day ---- */
+  T("d9","moveday",-14,"c","Send the quote request to three removal firms today",
+    "Use the ready-to-send message and checklist under Research notes, Removals. Ask for a written fixed price, door to door, with the billing basis spelled out. Suggested three: Paterson Removals (Reading), Plaza Removals (Reading and Watford depots), Easy Man and Van Removals. Expect roughly 350 to 700 GBP for one room plus one large piece of furniture over about 60 to 70 miles with two movers (my estimate from published hourly rates, not a quote)."),
+  T("d10","moveday",-14,"h","Measure the big item, stairwell and doors; photograph the load for the quotes",
+    "Quotes are far more accurate with: dimensions of the largest piece, a rough box count, photos of the pile, and the access at both ends (stairs or lift, distance from van to door, parking). Measure the largest item against the the flat's door widths, stairwell turns and any lift. Ask the agent for the stairwell and lift details if you cannot visit."),
+  T("d1","moveday",-11,"c","Book the van, removal company, or helpers for 27/11",
+    "Decide within a few days of sending the quotes; Friday slots go first. Recommendation: choose on written fixed price, not on which end the firm is based, but lean to a Reading-based firm (see Research notes, Removals). Book two movers: one person should not carry a large piece of furniture up to a first-floor flat. Get the booking, price, date, time window, and insurance cover confirmed in writing. Pay by card or bank transfer, never a large cash deposit. Ask the agent for the earliest key release time on 27/11 and book the Reading arrival after it, or you pay for a waiting van."),
+  T("d11","moveday",-5,"h","Plan the day's timings and who is where",
+    "Write the sequence: van arrives at Luton, load, depart, arrive in Reading after key release, unload, keys back. Decide how you travel (ride in the cab if the firm allows, or follow in your own car) and who lets the movers in at each end. Agree phone numbers both ways, a loading window at each address, and what happens if the keys are late."),
+  T("d2","moveday",-10,"h","Sort loading and parking at both ends",
+    "The new street may be a busy central road: confirm where a van can stop, any restrictions or permits, and the Luton end too (terraced street: ask neighbours to leave a space, use cones or bins to hold it). For Reading, contact Reading Borough Council parking services about loading and any temporary bay suspension and how much notice they need; I could not find a Reading page for this. Ask the agent about a loading bay or visitor permit."),
+  T("d3","moveday",-3,"h","Pack and label every box by room, in order of use",
+    "Fragile and valuables in your own vehicle. Keep important documents (passport, tenancy agreement, Right to Rent evidence, keys, chargers) in a bag you carry yourself."),
+  T("d4","moveday",-1,"n","Pack a first-night essentials box",
+    "Kettle, mug, bedding, towels, toiletries, chargers and adapters, light bulbs, basic tools, cleaning supplies, toilet roll, snacks, a torch, a few coins."),
+  T("d5","moveday",0,"c","Collect keys, test every lock, and count keys and fobs",
+    "Test the front door, windows, internal locks, communal entry, post box, and any bike or parking fobs. Confirm the number matches the inventory."),
+  T("d6","moveday",0,"c","Photograph every room before unpacking",
+    "Date-stamped photos of walls, floors, appliances, bathroom, and any existing damage. Send them to the agent the same day if the inventory is not yet agreed."),
+  T("d7","moveday",0,"h","Find the stopcock, fuse box, gas isolation valve, and boiler controls; test alarms",
+    "Know how to turn off water, electricity, and gas in an emergency. Test smoke and carbon monoxide alarms and confirm a fire exit route."),
+  T("d8","moveday",5,"n","Report any snags and repairs to the agent in writing",
+    "Keep emails; this is also your record that issues pre-dated you.")
+];
+
+/* Documents */
+const D = (id, sec, name, why) => ({ id, sec, name, why });
+const DOC_SECS = ["Tenancy", "Identity and proof", "Utilities and services", "Moving and insurance", "Other"];
+const DOCS = [
+  D("d_ta","Tenancy","Signed tenancy agreement","Saves you in any dispute; also your proof of address."),
+  D("d_ts","Tenancy","Written tenancy terms and government information sheet","Required for new tenancies; ask if not included."),
+  D("d_ag","Tenancy","Lettings agent contact sheet and landlord details","Repairs, out of hours, landlord name and address."),
+  D("d_rc","Tenancy","Receipts for holding deposit, deposit, and first rent","Keep every payment confirmation."),
+  D("d_dp","Tenancy","Deposit protection certificate and prescribed information","Scheme name and reference; due within 30 days of paying."),
+  D("d_inv","Tenancy","Inventory, check-in report, and dated photos","Basis for your deposit return."),
+  D("d_gs","Tenancy","Gas safety certificate","If there is any gas appliance."),
+  D("d_ei","Tenancy","Electrical safety report (EICR)","Evidence the electrics have been tested."),
+  D("d_epc","Tenancy","Energy Performance Certificate (EPC)","Required before the tenancy."),
+  D("d_htr","Tenancy","How to Rent guide","Government guide supplied by the agent."),
+  D("d_fr","Tenancy","Fire safety information for the building","Alarms, escape routes, shared areas."),
+  D("d_id","Identity and proof","Passport or photo ID","Keep a photo on your phone and the original in your carry bag."),
+  D("d_rtr","Identity and proof","Right to Rent evidence or share code","Shown to the agent before the tenancy."),
+  D("d_ref","Identity and proof","Employer reference or proof of income","If the agent still requires it."),
+  D("d_poa","Identity and proof","Proof of address at the new flat","Tenancy agreement now, council tax bill later."),
+  D("d_mr","Utilities and services","Opening meter readings with photos","Electric, gas, water if present."),
+  D("d_en","Utilities and services","Energy supplier confirmation","Account, tariff, and start date."),
+  D("d_wa","Utilities and services","Water account confirmation","Thames Water, or included in rent."),
+  D("d_bb","Utilities and services","Broadband order and install confirmation","Provider, contract length, install date."),
+  D("d_ct","Utilities and services","Council tax account number and band notification","Reading Borough Council."),
+  D("d_tv","Utilities and services","TV Licence confirmation","If you need one."),
+  D("d_mv","Moving and insurance","Removal booking, quote, or receipt","Useful if anything is damaged."),
+  D("d_ci","Moving and insurance","Contents insurance policy","Starts 27/11."),
+  D("d_rm","Moving and insurance","Royal Mail redirection confirmation","Start and end dates."),
+  D("d_pk","Moving and insurance","Parking permit or visitor permit","If applicable."),
+];
+const DSTAT = { need: "Need", req: "Requested", have: "Have", na: "N/A" };
+
+/* Key info fields: [key, label, default] */
+const INFO = [
+  ["Move", [
+    ["old_addr","Current address",""],
+    ["new_addr","New address",""],
+    ["start","Tenancy start","27/11/2026"],
+    ["keys","Key collection time and place",""],
+    ["van","Removal company or van booking",""]
+  ]],
+  ["Agent and landlord", [
+    ["agent","Lettings agency",""],
+    ["agent_name","Agent contact name",""],
+    ["agent_ph","Agent phone",""],
+    ["agent_em","Agent email",""],
+    ["agent_oh","Out-of-hours repairs number",""],
+    ["landlord","Landlord name and address",""],
+    ["freehold","Freeholder or managing agent contact",""]
+  ]],
+  ["Tenancy money", [
+    ["rent","Monthly rent",""],
+    ["rent_day","Rent due day",""],
+    ["dep_amt","Deposit amount and date paid",""],
+    ["dep_sch","Deposit scheme and reference",""],
+    ["hold","Holding deposit paid (amount and date)",""]
+  ]],
+  ["Accounts and references (no passwords)", [
+    ["ct_acc","Reading council tax account number",""],
+    ["ct_band","Council tax band",""],
+    ["en_sup","Energy supplier and account reference",""],
+    ["mpan","Electricity MPAN",""],
+    ["mprn","Gas MPRN",""],
+    ["wa_acc","Water account reference",""],
+    ["bb_prov","Broadband provider and order number",""],
+    ["bb_date","Broadband install date",""],
+    ["tvl","TV Licence number",""],
+    ["ins","Contents insurer and policy number",""],
+    ["gp","New GP practice and registration date",""]
+  ]]
+];
+const METERS = [
+  ["new_e","Flat: electricity (opening)"], ["new_g","Flat: gas (opening)"], ["new_w","Flat: water (opening)"]
+];
+
+/* ---------- state ---------- */
+const KEY = "moveTracker.lutonReading.2026.v1";
+/* S.ts: last-modified time per entry; S.del: tombstones for deleted custom items. Both drive the cross-device merge. */
+const blank = () => ({ t: {}, ct: [], d: {}, cd: [], info: {}, meters: {}, ts: {}, del: {} });
+const normalize = o => Object.assign(blank(), o || {});
+let S = blank(), storageOK = true;
+try { S = normalize(JSON.parse(localStorage.getItem(KEY) || "{}")); } catch (e) { storageOK = false; }
+let savedTimer;
+function save(noSync) {
+  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { storageOK = false; $("#storageWarn").hidden = false; }
+  const el = $("#saved"); el.textContent = "Saved"; clearTimeout(savedTimer); savedTimer = setTimeout(() => el.textContent = "", 1500);
+  if (!noSync) scheduleSync();
+}
+const touch = key => { S.ts[key] = Date.now(); delete S.del[key]; };
+const markDel = key => { S.ts[key] = Date.now(); S.del[key] = true; };
+const open = new Set();
+
+/* ---------- task model ---------- */
+const allTasks = () => [...TASKS, ...S.ct.map(c => ({ ...c, custom: true, links: [] }))];
+const status = t => (S.t[t.id] && S.t[t.id].s) || "todo";
+const due = t => (S.t[t.id] && S.t[t.id].due) || t.due || iso(addDays(MOVE, t.o));
+const notes = t => (S.t[t.id] && S.t[t.id].n) || "";
+const isOpen = t => status(t) === "todo" || status(t) === "doing";
+const priRank = p => ({ c: 0, h: 1, n: 2 }[p] ?? 2);
+const setT = (id, k, v) => { (S.t[id] = S.t[id] || {})[k] = v; touch("t:" + id); save(); };
+function progress(list) {
+  const act = list.filter(t => status(t) !== "na");
+  const done = act.filter(t => status(t) === "done").length;
+  return { done, total: act.length, pct: act.length ? Math.round(done / act.length * 100) : 0 };
+}
+const byDue = (a, b) => due(a).localeCompare(due(b)) || priRank(a.p) - priRank(b.p);
+
+/* ---------- dashboard ---------- */
+function renderDash() {
+  const tasks = allTasks(), td = todayIso();
+  const days = diffDays(MOVE_ISO, td);
+  const all = progress(tasks);
+  const openT = tasks.filter(isOpen);
+  const overdue = openT.filter(t => due(t) < td).sort(byDue);
+  const week = openT.filter(t => due(t) >= td && diffDays(due(t), td) <= 7).sort(byDue);
+  const crit = openT.filter(t => t.p === "c" && due(t) > addIsoWeek(td)).sort(byDue);
+  const docs = allDocs(); const dAct = docs.filter(d => docStatus(d) !== "na");
+  const dHave = dAct.filter(d => docStatus(d) === "have").length;
+  const dPct = dAct.length ? Math.round(dHave / dAct.length * 100) : 0;
+  const headline = days > 0 ? `${days}` : days === 0 ? "Today" : `${-days}`;
+  const sub = days > 0 ? `day${days === 1 ? "" : "s"} until the tenancy starts (${fmt(MOVE_ISO)})` : days === 0 ? "Move day. Keys, meter readings, photos." : `day${days === -1 ? "" : "s"} since the tenancy started`;
+  const item = t => `<li><span><a class="lnk" data-go="${esc(t.id)}">${esc(t.t)}</a></span><span class="meta">${t.p !== "n" ? `<span class="chip ${t.p}">${PRI[t.p]}</span>` : ""}<span class="chip ${due(t) < td ? "over" : ""}">${due(t) < td ? "overdue: " : ""}${fmt(due(t))}</span></span></li>`;
+  const list = (arr, empty) => arr.length ? `<ul class="plain">${arr.slice(0, 12).map(item).join("")}</ul>${arr.length > 12 ? `<p class="note">${arr.length - 12} more in Tasks.</p>` : ""}` : `<p class="note">${empty}</p>`;
+  const u1 = TASKS.find(t => t.id === "u1");
+  const bbWarn = isOpen(u1) && days <= 21 ? `<div class="alertbox"><strong>Broadband is the tightest deadline.</strong> Most installs take 2 to 4 weeks or more and you have ${days} day${days === 1 ? "" : "s"}. Order today and set up the interim internet plan. <a class="lnk" data-go="u1">Open task</a></div>` : "";
+  $("#tab-dash").innerHTML = `
+    ${bbWarn}
+    <div class="grid g2">
+      <div class="card"><div class="hero">
+        <div><div class="big">${headline}</div><div class="lbl">${sub}</div></div>
+        <div style="flex:1;min-width:200px">
+          <div class="catrow"><span><strong>Tasks</strong></span><span>${all.done} of ${all.total} done (${all.pct}%)</span><div class="bar"><i style="width:${all.pct}%"></i></div></div>
+          <div class="catrow"><span><strong>Documents</strong></span><span>${dHave} of ${dAct.length} in hand (${dPct}%)</span><div class="bar"><i style="width:${dPct}%"></i></div></div>
+        </div></div></div>
+      <div class="card"><h2>Key facts</h2>
+        <ul class="plain">
+          <li><span class="muted">From</span><span>${esc(infoVal("old_addr"))}</span></li>
+          <li><span class="muted">To</span><span>${esc(infoVal("new_addr"))}</span></li>
+          <li><span class="muted">Agent</span><span>${esc(infoVal("agent"))}</span></li>
+        </ul></div>
+    </div>
+    <div class="card"><h2>Overdue or due now ${overdue.length ? `<span class="chip over">${overdue.length}</span>` : ""}</h2>${list(overdue, "Nothing overdue.")}</div>
+    <div class="card"><h2>Next 7 days</h2>${list(week, "Nothing due in the next 7 days.")}</div>
+    <div class="card"><h2>Critical, later</h2>${list(crit, "No other critical items outstanding.")}</div>
+    <div class="card"><h2>Progress by category</h2>
+      <div class="grid g3">${Object.entries(CATS).map(([k, label]) => {
+        const p = progress(tasks.filter(t => t.cat === k));
+        return `<div class="catrow"><span><a class="lnk" data-cat="${k}">${esc(label)}</a></span><span>${p.done}/${p.total}</span><div class="bar"><i style="width:${p.pct}%"></i></div></div>`;
+      }).join("")}</div></div>`;
+}
+const addIsoWeek = s => iso(addDays(fromIso(s), 7));
+
+/* ---------- tasks ---------- */
+function fillCatSelects() {
+  $("#fCat").innerHTML = `<option value="">All categories</option>` + Object.entries(CATS).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join("");
+  $("#nt_cat").innerHTML = Object.entries(CATS).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join("");
+  $("#nd_sec").innerHTML = DOC_SECS.map(s => `<option>${esc(s)}</option>`).join("");
+}
+function taskHtml(t) {
+  const st = status(t), dd = due(t), td = todayIso();
+  const over = isOpen(t) && dd < td;
+  const tick = st === "done" ? "&#10003;" : st === "doing" ? "&middot;" : "";
+  const sel = Object.entries(STATUS).map(([k, v]) => `<option value="${k}" ${k === st ? "selected" : ""}>${v}</option>`).join("");
+  const links = t.links && t.links.length ? `<div class="links">${t.links.map(l => `<a href="${esc(l[1])}" target="_blank" rel="noopener">${esc(l[0])}</a>`).join("")}</div>` : "";
+  return `<details class="task ${st === "done" || st === "na" ? "done" : ""}" data-id="${esc(t.id)}" ${open.has(t.id) ? "open" : ""}>
+    <summary>
+      <button class="tick ${st}" data-tick="${esc(t.id)}" title="Click to cycle: to do, in progress, done" aria-label="Change status">${tick}</button>
+      <span class="ttl">${esc(t.t)}</span>
+      <span class="meta">
+        ${st === "na" ? `<span class="chip">N/A</span>` : ""}
+        ${t.p !== "n" ? `<span class="chip ${t.p}">${PRI[t.p]}</span>` : ""}
+        ${t.cond ? `<span class="chip blue">conditional</span>` : ""}
+        <span class="chip">${esc(CATS[t.cat])}</span>
+        <span class="chip ${over ? "over" : ""}">${over ? "overdue: " : ""}${fmt(dd)}</span>
+      </span>
+    </summary>
+    <div class="body">
+      ${t.d ? `<p>${esc(t.d).replace(/\n/g, "<br>")}</p>` : ""}
+      ${t.cond ? `<div class="cond"><strong>Applies if:</strong> ${esc(t.cond)}</div>` : ""}
+      ${links}
+      <div class="ctrl">
+        <label>Status <select data-st="${esc(t.id)}">${sel}</select></label>
+        <label>Due <input type="date" data-due="${esc(t.id)}" value="${esc(dd)}"></label>
+        ${t.custom ? `<button class="btn danger" data-del="${esc(t.id)}">Delete task</button>` : ""}
+      </div>
+      <textarea data-notes="${esc(t.id)}" placeholder="Notes, reference numbers, who you spoke to">${esc(notes(t))}</textarea>
+    </div></details>`;
+}
+function renderTasks() {
+  const q = $("#fSearch").value.trim().toLowerCase(), cat = $("#fCat").value, fs = $("#fStatus").value, sort = $("#fSort").value;
+  let list = allTasks().filter(t => (!cat || t.cat === cat) &&
+    (fs === "all" || (fs === "open" ? isOpen(t) : status(t) === "done")) &&
+    (!q || (t.t + " " + (t.d || "") + " " + notes(t)).toLowerCase().includes(q)));
+  list.sort(sort === "cat" ? (a, b) => Object.keys(CATS).indexOf(a.cat) - Object.keys(CATS).indexOf(b.cat) || byDue(a, b) : byDue);
+  const p = progress(allTasks());
+  $("#taskList").innerHTML = `<p class="note">${list.length} shown. ${p.done} of ${p.total} complete overall.</p>` + (list.map(taskHtml).join("") || `<p class="muted">No tasks match.</p>`);
+}
+
+/* ---------- documents ---------- */
+const allDocs = () => [...DOCS, ...S.cd];
+const docStatus = d => (S.d[d.id] && S.d[d.id].s) || "need";
+const setD = (id, k, v) => { (S.d[id] = S.d[id] || {})[k] = v; touch("d:" + id); save(); };
+function renderDocs() {
+  const f = $("#dFilter").value;
+  const docs = allDocs().filter(d => f === "all" || (f === "have" ? docStatus(d) === "have" : docStatus(d) !== "have" && docStatus(d) !== "na"));
+  const secs = DOC_SECS.filter(s => docs.some(d => d.sec === s));
+  $("#docList").innerHTML = secs.map(s => `<div class="sec">${esc(s)}</div><div class="card" style="padding-top:6px;padding-bottom:6px">${docs.filter(d => d.sec === s).map(d => {
+    const st = docStatus(d), info = S.d[d.id] || {};
+    return `<div class="docrow">
+      <select data-dst="${esc(d.id)}">${Object.entries(DSTAT).map(([k, v]) => `<option value="${k}" ${k === st ? "selected" : ""}>${v}</option>`).join("")}</select>
+      <div><div class="n">${esc(d.name)}</div><div class="why">${esc(d.why || "")}</div>${d.custom ? `<a class="lnk note" data-ddel="${esc(d.id)}">remove</a>` : ""}</div>
+      <div><input type="text" data-dloc="${esc(d.id)}" placeholder="Where stored (folder, email, drawer)" value="${esc(info.loc || "")}"><input type="text" data-dnote="${esc(d.id)}" placeholder="Notes or reference" value="${esc(info.n || "")}" style="margin-top:6px"></div>
+    </div>`;
+  }).join("")}</div>`).join("") || `<p class="muted">Nothing to show.</p>`;
+}
+
+/* ---------- info and meters ---------- */
+const infoVal = k => { const f = INFO.flatMap(s => s[1]).find(x => x[0] === k); return k in S.info ? S.info[k] : (f ? f[2] : ""); };
+function renderInfo() {
+  $("#tab-info").innerHTML = INFO.map(([title, fields]) => `<div class="card"><h2>${esc(title)}</h2><div class="form">${fields.map(([k, label]) =>
+    `<label>${esc(label)}<input type="text" data-info="${k}" value="${esc(infoVal(k))}"></label>`).join("")}</div></div>`).join("") +
+    `<div class="card"><h2>Meter readings</h2>
+      <p class="note">Photograph each meter with its serial number visible. If the electric meter has two registers (day and night), type both.</p>
+      <table class="m"><tr><th>Meter</th><th>Serial</th><th>Reading</th><th>Date and time</th><th>Photo saved where</th></tr>
+      ${METERS.map(([k, label]) => { const m = S.meters[k] || {}; return `<tr><td>${esc(label)}</td>${["serial", "reading", "date", "photo"].map(f => `<td><input type="text" data-m="${k}" data-f="${f}" value="${esc(m[f] || "")}"></td>`).join("")}</tr>`; }).join("")}
+      </table></div>`;
+}
+
+/* ---------- guide ---------- */
+const TV = '<span class="tag v">verified</span>', TK = '<span class="tag k">from my knowledge, check</span>', TX = '<span class="tag x">sources conflict</span>';
+function renderGuide() {
+  $("#tab-guide").innerHTML = `<div class="card guide">
+  <h2>Research notes</h2>
+  <p class="note">Tags: ${TV} confirmed on an official or council page during research. ${TK} I believe this is right but did not confirm it on a current source. ${TX} do not rely on it without checking.</p>
+
+  <h3>The timeline problem</h3>
+  <ul>
+    <li>Today is 13/11/2026. The tenancy starts in 14 days. Broadband is the only item that cannot be fixed on move day.</li>
+    <li>Council tax: Reading says the account number can take up to 21 working days, but you can submit the form now. ${TV}</li>
+    <li>Energy and water can be set up the same day, using the opening meter readings.</li>
+  </ul>
+
+  <h3 id="removals">Removals: local to Luton or Reading?</h3>
+  <p><strong>Recommendation: choose on a written fixed price that includes mileage, and lean to a Reading-based firm.</strong> I assumed the cut-off "1 piece of furn" in your request meant one large piece of furniture.</p>
+  <ul>
+    <li>Luton to Reading is roughly 60 to 70 miles each way, so no firm is local to both ends. Whoever you pick drives an empty leg either to Luton or back from Reading, and will bill for it one way or another. On cost, the two sides are about equal. ${TK}</li>
+    <li>The deciding factors are therefore the Reading end (central location, first-floor flat, restricted parking) and review quality. Reading firms know the local loading rules and had much larger volumes of vetted reviews in my search. The Luton-side firms I found had thin or old reviews. ${TV}</li>
+    <li>Ask every firm when the clock starts and stops. A firm billing from its depot on both legs can cost noticeably more than the headline rate suggests.</li>
+    <li>Two movers is the right call: one person should not take a large piece of furniture up to a first-floor flat, and two finish sooner.</li>
+  </ul>
+  <p><strong>Assumed job:</strong> one room (about 25 to 35 boxes plus loose items) and one large furniture piece, Luton to the Reading flat, loading, about 1.5 to 2 hours driving, unloading, so about 5 hours on the clock with two movers and a van. <strong>All prices below are my estimates from published hourly rates, not quotes.</strong></p>
+  <table class="t">
+    <tr><th>Firm</th><th>Based</th><th>Evidence found</th><th>Published rates</th><th>My ballpark for this job</th></tr>
+    <tr><td><strong>Paterson Removals</strong><br><span class="note">Sole trader, Jamie Paterson</span></td><td>Reading</td><td>Checkatrade rating 9.96 to 10 out of 10 (19 to 104 reviews, depending on page snapshot). Covers Berkshire and says it can travel nationwide. Lists house removals, man and van, packing. ${TV}</td><td>None found. Checkatrade averages about 78 GBP/hour for two movers with a van.</td><td><strong>400 to 550 GBP</strong> ${TK}</td></tr>
+    <tr><td><strong>Plaza Removals Ltd</strong></td><td>Reading, with depots in Watford, Heathrow, Guildford, and London</td><td>Checkatrade 9.68 (113 reviews) on one page, 9.32 on another. Recent reviews positive. One Trustpilot complaint about an unanswered insurance claim, so ask about claims. The Watford depot is near Luton. ${TX}</td><td>None found. A larger firm, so possibly minimum charges.</td><td><strong>450 to 700 GBP</strong> ${TK}</td></tr>
+    <tr><td><strong>Easy Man and Van Removals</strong></td><td>London and Peterborough (describes itself that way); has pages for Luton and Reading</td><td>About 590 Trustpilot reviews, the visible ones mostly 5-star. Confirm they cover this route and where the van starts. ${TV}</td><td>1 man and long-wheelbase van 60/hour; 2 men 90/hour; 2 men and Luton van 100/hour; 1 GBP per mile for long distance. ${TV}</td><td><strong>365 to 560 GBP</strong>: 1 man about 365, 2 men about 515 at 5 hours plus 65 miles ${TK}</td></tr>
+  </table>
+  <p class="note">Benchmarks: London Man Van lists a 71.6-mile Luton-van job at 704.88 GBP over 5 hours and a one-man 43.8-mile Luton-van job at 293 GBP over 4 hours (company-published examples). Typical hourly rates in the sources I found: one mover 35 to 93 GBP (average about 64); two movers about 50 to 100. Under about 300 GBP for this job probably means one mover, no insurance, or hidden extras. Over about 700 GBP is high for this load. Runner-ups that came up: London Man Van, Luton Man And Van Removals (about 18 Trustpilot reviews, reviews dated 2020). Ratings come from different platforms and snapshots, so check the live pages before booking.</p>
+
+  <h3>What the firms need from you (and what to prepare)</h3>
+  <ul>
+    <li><strong>Date and times:</strong> Friday 27/11, flexible start; the Reading key release time from the agent.</li>
+    <li><strong>Both addresses and access:</strong> postcode, floor, stairs or lift, how far the van can park from the door, parking restrictions, narrow streets, communal entrance and corridor widths.</li>
+    <li><strong>The load:</strong> number of boxes (small, medium, large), loose items, photos of the pile, the large piece with exact dimensions, anything heavy, fragile, or very valuable.</li>
+    <li><strong>Dismantling:</strong> what must come apart and go back together (bed, wardrobe, shelving), and who does it.</li>
+    <li><strong>Services:</strong> number of movers, van size, packing materials, whether you help load, whether you travel in the cab.</li>
+    <li><strong>Price terms in writing:</strong> fixed price versus hourly, minimum hours, when the clock starts, mileage and fuel, return or empty-leg charge, parking and permit costs, VAT, waiting time if keys are late.</li>
+    <li><strong>Insurance:</strong> goods in transit limit per item and per load (some are low, around 40 to 50 GBP per item per one guide), public liability cover, claim deadline. Check your own contents policy for cover during the move. ${TV}</li>
+    <li><strong>Credentials:</strong> company name and registration, recent reviews, British Association of Removers membership if they claim it (check bar-removers.org.uk). I could not confirm BAR's criteria in my search.</li>
+    <li><strong>Payment and cancellation:</strong> pay by card or bank transfer; be wary of large cash deposits; get the cancellation terms.</li>
+    <li><strong>Your prep:</strong> measure the big piece and the stairwell, photograph the load, dismantle ahead of time, pack in medium boxes under about 15 kg, label by room, keep documents and valuables with you, hold a parking space at Luton, arrange Reading loading, and write down both phone numbers.</li>
+  </ul>
+  <p><strong>Ready-to-send quote request</strong> <button class="btn ghost" data-copy="quoteTpl" type="button">Copy</button></p>
+  <textarea id="quoteTpl" readonly rows="16" style="width:100%">Hello, I would like a written fixed-price quote for a move on Friday 27 November 2026. My start time is flexible; the Reading keys are available from [KEY RELEASE TIME].
+
+From: ${esc(infoVal("old_addr") || "[current address]")} ([stairs or ground floor]; parking: [on street, I can hold a space]).
+To: ${esc(infoVal("new_addr") || "[new address]")} ([stairs or lift]; parking: [to confirm]).
+
+Load: one room of belongings (about [N] boxes and [N] loose items) plus one large item: [item and dimensions]. Photos attached. To dismantle and rebuild: [list]. Fragile or heavy: [list].
+
+In your quote please confirm: 1) total fixed price including VAT, fuel, mileage and any return or empty-leg charge; 2) number of movers and van size; 3) where your clock starts and stops, and any minimum hours; 4) goods in transit limit and public liability cover; 5) cancellation and payment terms; 6) whether I can travel in the cab; 7) your company name and registration details.
+
+Thank you, [YOUR NAME]</textarea>
+
+  <h3>Broadband</h3>
+  <ul>
+    <li>Check the Ofcom checker and the providers' own checkers for the flat's address. Predicted speeds and availability can differ from what you actually get. ${TV}</li>
+    <li>Typical advice: tell or order from your provider 2 to 4 weeks ahead; some guides say 6 to 8 weeks, and new line installs or landlord permissions can make it longer. ${TV} (commercial guides, not Ofcom)</li>
+    <li>Flats: ask the agent whether there is already a live line or fibre in the building, and whether the landlord or freeholder must consent to an install. ${TK}</li>
+    <li>Choose a 12 or 18 month term rather than 24, since periodic tenancies can end sooner than a fixed term. ${TK}</li>
+    <li>The exact Ofcom rules on mid-contract moves to a new address did not come up in my search. You have no existing broadband in your own name, so this is mostly relevant if you later move again.</li>
+    <li>Plan B: 4G or 5G home internet or a phone hotspot to bridge the gap.</li>
+  </ul>
+
+  <h3>Electricity and gas</h3>
+  <ul>
+    <li>Contact the current supplier at the flat on move day with your move-in date and opening meter readings. If you do not, you are put on a deemed contract, usually at the supplier's default and often highest tariff. ${TV}</li>
+    <li>Always take and send opening readings, ideally agreed with the agent or outgoing tenant: they set the start point of your liability. ${TV}</li>
+    <li>If you pay the energy bills directly, you generally have the right to choose your supplier; the landlord or agent should not unreasonably stop you. ${TV}</li>
+    <li>Switching typically takes about 5 working days once you are on an account. ${TV} (one forum report of around 6 weeks, treat as an outlier)</li>
+    <li>Ofgem has a draft consultation on deemed contracts for home moves, running to 9 December 2026. It is a draft, so do not rely on any proposed change. ${TV}</li>
+  </ul>
+
+  <h3>Water</h3>
+  <ul>
+    <li>You cannot choose a water supplier; register your name and move-in date so the account opens in your name. ${TV}</li>
+    <li>Reading RG1 is listed under Thames Water on the postcode lookups I found. Confirm on Thames Water's site. ${TK}</li>
+  </ul>
+
+  <h3>Council tax</h3>
+  <ul>
+    <li>Reading Borough Council: use the online form to tell them you are moving in. Needs your move date and tenancy dates. ${TV}</li>
+    <li>Tenants usually pay council tax unless the agreement or property type says otherwise. Check the band, and apply for any discount (sole occupier 25%, student exemption). ${TK}</li>
+  </ul>
+
+  <h3>Who else to tell</h3>
+  <ul>
+    <li>DVLA (licence, V5C, vehicle tax Direct Debit). ${TV}</li>
+    <li>HMRC via your personal tax account, after you have moved. ${TV} (third-party guides)</li>
+    <li>Electoral register at the new address. ${TV}</li>
+    <li>Banks, cards, savings, pensions, employer and payroll, insurers, mobile provider, GP, dentist, pharmacy, subscriptions, online accounts.</li>
+    <li>Royal Mail redirection: Royal Mail's concession page lists 45 / 66.50 / 95 GBP for 3 / 6 / 12 months for the lead applicant; the Post Office page agreed, another snapshot differed. Check at checkout. Use it as a safety net only. ${TX}</li>
+  </ul>
+
+  <h3>Your rights as a tenant (England)</h3>
+  <ul>
+    <li>The Renters' Rights Act changes took effect on 1 May 2026, so your tenancy should be an assured periodic tenancy with no fixed term; section 21 no-fault eviction is abolished; rent in advance is limited to one month; you can request a pet and the landlord cannot unreasonably refuse. ${TV}</li>
+    <li>Deposit capped at 5 weeks' rent (under 50,000 GBP annual rent); holding deposit max 1 week; deposit protected within 30 days in an approved scheme with prescribed information given to you. ${TK}</li>
+    <li>You should be given the EPC, gas safety record and the How to Rent guide before the tenancy starts. ${TK}</li>
+    <li>Scam protection: confirm bank details with the agent by phone on a number you found independently, never from an email alone.</li>
+  </ul>
+  <p class="note">None of this is legal advice. Where a rule matters to a decision, check the linked official page.</p>
+  </div>`;
+}
+
+/* ---------- wiring ---------- */
+function goTab(name) {
+  $$("#tabs button").forEach(b => b.classList.toggle("on", b.dataset.tab === name));
+  $$(".tab").forEach(s => s.classList.toggle("on", s.id === "tab-" + name));
+  window.scrollTo(0, 0);
+  if (name === "dash") renderDash();
+}
+function goTask(id) {
+  open.add(id);
+  $("#fSearch").value = ""; $("#fCat").value = ""; $("#fStatus").value = "all";
+  renderTasks(); goTab("tasks");
+  const el = $(`details[data-id="${id}"]`); if (el) setTimeout(() => el.scrollIntoView({ block: "center" }), 0);
+}
+$("#tabs").addEventListener("click", e => { const b = e.target.closest("button"); if (b) goTab(b.dataset.tab); });
+$("#tab-dash").addEventListener("click", e => {
+  const g = e.target.closest("[data-go]"); if (g) return goTask(g.dataset.go);
+  const c = e.target.closest("[data-cat]"); if (c) { $("#fCat").value = c.dataset.cat; $("#fStatus").value = "all"; renderTasks(); goTab("tasks"); }
+});
+["fSearch", "fCat", "fStatus", "fSort"].forEach(id => $("#" + id).addEventListener("input", renderTasks));
+$("#btnAddTask").onclick = () => { $("#addTaskBox").hidden = false; $("#nt_due").value = iso(new Date()); $("#nt_title").focus(); };
+$("#btnCancelTask").onclick = () => $("#addTaskBox").hidden = true;
+$("#btnSaveTask").onclick = () => {
+  const t = $("#nt_title").value.trim(); if (!t) return;
+  const id = "x" + Date.now();
+  S.ct.push({ id, cat: $("#nt_cat").value, t, d: "", p: "n", due: $("#nt_due").value || iso(new Date()), o: 0 });
+  touch("ct:" + id);
+  $("#nt_title").value = ""; $("#addTaskBox").hidden = true; save(); renderTasks();
+};
+const tl = $("#taskList");
+tl.addEventListener("click", e => {
+  const tick = e.target.closest("[data-tick]");
+  if (tick) { e.preventDefault(); e.stopPropagation(); const id = tick.dataset.tick, t = allTasks().find(x => x.id === id); const next = { todo: "doing", doing: "done", done: "todo", na: "todo" }[status(t)]; setT(id, "s", next); renderTasks(); return; }
+  const del = e.target.closest("[data-del]");
+  if (del && confirm("Delete this task?")) { const id = del.dataset.del; S.ct = S.ct.filter(c => c.id !== id); delete S.t[id]; markDel("ct:" + id); markDel("t:" + id); save(); renderTasks(); }
+});
+tl.addEventListener("change", e => {
+  const el = e.target;
+  if (el.dataset.st) { setT(el.dataset.st, "s", el.value); renderTasks(); }
+  else if (el.dataset.due) { if (el.value) { setT(el.dataset.due, "due", el.value); renderTasks(); } }
+  else if (el.dataset.notes) setT(el.dataset.notes, "n", el.value);
+});
+tl.addEventListener("toggle", e => { const d = e.target; if (d.dataset && d.dataset.id) { d.open ? open.add(d.dataset.id) : open.delete(d.dataset.id); } }, true);
+
+$("#dFilter").addEventListener("input", renderDocs);
+$("#btnAddDoc").onclick = () => { $("#addDocBox").hidden = false; $("#nd_name").focus(); };
+$("#btnCancelDoc").onclick = () => $("#addDocBox").hidden = true;
+$("#btnSaveDoc").onclick = () => {
+  const n = $("#nd_name").value.trim(); if (!n) return;
+  const id = "xd" + Date.now();
+  S.cd.push({ id, sec: $("#nd_sec").value, name: n, why: "", custom: true });
+  touch("cd:" + id);
+  $("#nd_name").value = ""; $("#addDocBox").hidden = true; save(); renderDocs();
+};
+const dl = $("#docList");
+dl.addEventListener("change", e => {
+  const el = e.target;
+  if (el.dataset.dst) { setD(el.dataset.dst, "s", el.value); renderDocs(); }
+  else if (el.dataset.dloc) setD(el.dataset.dloc, "loc", el.value);
+  else if (el.dataset.dnote) setD(el.dataset.dnote, "n", el.value);
+});
+dl.addEventListener("click", e => { const r = e.target.closest("[data-ddel]"); if (r && confirm("Remove this document?")) { const id = r.dataset.ddel; S.cd = S.cd.filter(d => d.id !== id); delete S.d[id]; markDel("cd:" + id); markDel("d:" + id); save(); renderDocs(); } });
+
+$("#tab-info").addEventListener("change", e => {
+  const el = e.target;
+  if (el.dataset.info) { S.info[el.dataset.info] = el.value; touch("i:" + el.dataset.info); save(); renderHeaderSub(); }
+  else if (el.dataset.m) { (S.meters[el.dataset.m] = S.meters[el.dataset.m] || {})[el.dataset.f] = el.value; touch("m:" + el.dataset.m); save(); }
+});
+
+$("#tab-guide").addEventListener("click", e => {
+  const b = e.target.closest("[data-copy]"); if (!b) return;
+  const ta = document.getElementById(b.dataset.copy); ta.select();
+  const done = () => { b.textContent = "Copied"; setTimeout(() => b.textContent = "Copy", 1500); };
+  if (navigator.clipboard) navigator.clipboard.writeText(ta.value).then(done, () => { document.execCommand("copy"); done(); });
+  else { document.execCommand("copy"); done(); }
+});
+$("#btnPrint").onclick = () => window.print();
+$("#btnExport").onclick = () => {
+  const blob = new Blob([JSON.stringify(S, null, 2)], { type: "application/json" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `move-tracker-backup-${todayIso()}.json`; a.click(); URL.revokeObjectURL(a.href);
+};
+$("#btnImport").onclick = () => $("#fileImport").click();
+$("#fileImport").addEventListener("change", e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try { const data = JSON.parse(r.result); if (!confirm("Replace everything in the tracker with this backup?")) return; S = normalize(data); keysOf(S).forEach(k => { S.ts[k] = Date.now(); }); save(); renderAll(); }
+    catch (err) { alert("That file is not a valid backup."); }
+  };
+  r.readAsText(f); e.target.value = "";
+});
+$("#btnReset").onclick = () => { if (confirm("Erase all progress, notes, and custom items on THIS device? If sync is connected, the cloud copy will come back on the next sync. Export a backup first if unsure.")) { S = blank(); seedDefaults(); save(true); renderAll(); } };
+
+/* ---------- cross-device sync (private GitHub Gist, optional client-side encryption) ---------- */
+const CFG_KEY = "moveTracker.sync.v1";   /* token, passphrase and gist id live only in this browser, never in the gist or in backups */
+const GIST_FILE = "move-tracker.json";
+const getCfg = () => { try { return JSON.parse(localStorage.getItem(CFG_KEY) || "null"); } catch (e) { return null; } };
+const setCfg = c => { try { c ? localStorage.setItem(CFG_KEY, JSON.stringify(c)) : localStorage.removeItem(CFG_KEY); } catch (e) {} };
+
+function keysOf(st) {
+  const k = new Set([...Object.keys(st.ts || {}), ...Object.keys(st.del || {})]);
+  Object.keys(st.t || {}).forEach(i => k.add("t:" + i)); Object.keys(st.d || {}).forEach(i => k.add("d:" + i));
+  Object.keys(st.info || {}).forEach(i => k.add("i:" + i)); Object.keys(st.meters || {}).forEach(i => k.add("m:" + i));
+  (st.ct || []).forEach(c => k.add("ct:" + c.id)); (st.cd || []).forEach(c => k.add("cd:" + c.id));
+  return k;
+}
+function getE(st, key) {
+  const i = key.indexOf(":"), p = key.slice(0, i), id = key.slice(i + 1);
+  return { t: () => st.t[id], d: () => st.d[id], i: () => st.info[id], m: () => st.meters[id],
+           ct: () => (st.ct || []).find(c => c.id === id), cd: () => (st.cd || []).find(c => c.id === id) }[p]();
+}
+function setE(st, key, v) {
+  const i = key.indexOf(":"), p = key.slice(0, i), id = key.slice(i + 1);
+  if (p === "t") st.t[id] = v; else if (p === "d") st.d[id] = v; else if (p === "i") st.info[id] = v; else if (p === "m") st.meters[id] = v;
+  else if (p === "ct") st.ct.push(v); else if (p === "cd") st.cd.push(v);
+}
+/* Per-entry last-writer-wins. An entry this device never touched (ts 0) always yields to the cloud copy. */
+function merge(a, b) {
+  const out = blank();
+  for (const key of new Set([...keysOf(a), ...keysOf(b)])) {
+    const ta = (a.ts || {})[key] || 0, tb = (b.ts || {})[key] || 0;
+    const first = (ta === 0 && tb > 0) || tb > ta ? b : a, second = first === a ? b : a;
+    out.ts[key] = Math.max(ta, tb);
+    let done = false;
+    for (const src of [first, second]) {
+      if ((src.del || {})[key]) { out.del[key] = true; done = true; break; }
+      const v = getE(src, key);
+      if (v !== undefined) { setE(out, key, v); done = true; break; }
+    }
+    if (!done) delete out.ts[key];
+  }
+  out.ct.sort((x, y) => x.id.localeCompare(y.id)); out.cd.sort((x, y) => x.id.localeCompare(y.id));
+  return out;
+}
+function stable(o) { return JSON.stringify(o, (k, v) => v && typeof v === "object" && !Array.isArray(v) ? Object.fromEntries(Object.keys(v).sort().map(x => [x, v[x]])) : v); }
+function seedDefaults() {   /* non-empty built-in defaults become real data, so the first device uploads them */
+  INFO.flatMap(s => s[1]).forEach(([k, , def]) => { if (def && !(k in S.info)) { S.info[k] = def; S.ts["i:" + k] = S.ts["i:" + k] || 1; } });
+}
+
+const b64 = u8 => { let s = ""; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(s); };
+const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function deriveKey(pass, salt) {
+  const km = await crypto.subtle.importKey("raw", new TextEncoder().encode(pass), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name: "PBKDF2", salt, iterations: 250000, hash: "SHA-256" }, km, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
+}
+async function pack(state, pass) {
+  if (!pass) return JSON.stringify({ format: "move-tracker", v: 1, enc: false, state });
+  if (!(window.crypto && crypto.subtle)) throw new Error("This browser cannot encrypt here (needs https or a local file). Use Chrome or Edge, or host the page on https.");
+  const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name: "AES-GCM", iv }, await deriveKey(pass, salt), new TextEncoder().encode(JSON.stringify(state))));
+  return JSON.stringify({ format: "move-tracker", v: 1, enc: "AES-GCM", salt: b64(salt), iv: b64(iv), data: b64(ct) });
+}
+async function unpack(text, pass) {
+  const j = JSON.parse(text);
+  if (j.format !== "move-tracker") throw new Error("That gist is not a move tracker file.");
+  if (!j.enc) return normalize(j.state);
+  if (!pass) throw new Error("The cloud copy is encrypted: enter the passphrase.");
+  try {
+    const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: unb64(j.iv) }, await deriveKey(pass, unb64(j.salt)), unb64(j.data));
+    return normalize(JSON.parse(new TextDecoder().decode(pt)));
+  } catch (e) { throw new Error("Wrong passphrase, or the cloud copy is damaged."); }
+}
+async function gh(path, opts = {}) {
+  const cfg = getCfg();
+  const r = await fetch("https://api.github.com" + path, { ...opts, headers: { "Authorization": "Bearer " + cfg.token, "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", ...(opts.body ? { "Content-Type": "application/json" } : {}) } });
+  if (!r.ok) throw new Error(r.status === 401 ? "GitHub rejected the token (401)." : r.status === 404 ? "Gist not found, or the token cannot see it (404)." : `GitHub error ${r.status}.`);
+  return r.json();
+}
+async function fetchRemote() {
+  const g = await gh("/gists/" + getCfg().gistId);
+  const f = g.files && g.files[GIST_FILE];
+  if (!f) return null;
+  let content = f.content;
+  if (f.truncated) content = await (await fetch(f.raw_url)).text();
+  return content ? await unpack(content, getCfg().pass) : null;
+}
+const pushRemote = async state => gh("/gists/" + getCfg().gistId, { method: "PATCH", body: JSON.stringify({ files: { [GIST_FILE]: { content: await pack(state, getCfg().pass) } } }) });
+
+let syncing = false, syncAgain = false, syncTimer, pendingRefresh = false;
+function setStat(msg, err) { const el = $("#syncStat"); el.textContent = msg; el.classList.toggle("err", !!err); }
+function scheduleSync() { if (!getCfg()) return; clearTimeout(syncTimer); syncTimer = setTimeout(() => syncNow(), 2500); }
+function refreshViews() {
+  const a = document.activeElement;
+  if (a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) && !a.closest("dialog")) { pendingRefresh = true; return; }
+  pendingRefresh = false; renderHeaderSub(); renderDash(); renderTasks(); renderDocs(); renderInfo(); renderGuide();
+}
+document.addEventListener("focusout", () => { if (pendingRefresh) setTimeout(refreshViews, 150); });
+async function syncNow(mode) {   /* mode: undefined = merge, "push" = cloud takes this device, "pull" = this device takes cloud */
+  const cfg = getCfg(); if (!cfg || !cfg.gistId) return;
+  if (syncing) { syncAgain = true; return; }
+  syncing = true; setStat("Syncing...");
+  try {
+    const remote = mode === "push" ? null : await fetchRemote();
+    let next;
+    if (mode === "push") { next = S; }
+    else if (mode === "pull") { if (!remote) throw new Error("Nothing in the cloud copy yet."); next = remote; }
+    else next = remote ? merge(S, remote) : S;
+    const localChanged = stable(next) !== stable(S);
+    if (localChanged) { S = next; save(true); refreshViews(); }
+    if (mode === "push" || !remote || stable(next) !== stable(remote)) await pushRemote(S);
+    cfg.last = Date.now(); setCfg(cfg);
+    setStat("Synced " + new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }));
+    return true;
+  } catch (e) { setStat("Sync failed", true); $("#sy_msg").textContent = e.message || String(e); console.warn(e); return false; }
+  finally { syncing = false; if (syncAgain) { syncAgain = false; scheduleSync(); } }
+}
+function syncUiState() {
+  const cfg = getCfg();
+  $("#sy_token").value = cfg ? cfg.token : $("#sy_token").value; $("#sy_pass").value = cfg ? cfg.pass : $("#sy_pass").value; $("#sy_gist").value = cfg ? cfg.gistId : $("#sy_gist").value;
+  $("#sy_create").hidden = !!cfg; $("#sy_connect").hidden = !!cfg;
+  $("#sy_now").hidden = $("#sy_link").hidden = !cfg;
+  $("#syncSteps").hidden = !!cfg;
+  $("#btnSync").textContent = cfg ? "Sync: on" : "Sync";
+  if (!cfg) setStat("");
+}
+function readForm() { return { token: $("#sy_token").value.trim(), pass: $("#sy_pass").value, gistId: $("#sy_gist").value.trim() }; }
+async function connect(create) {
+  const f = readForm(), msg = $("#sy_msg");
+  if (!f.token) return msg.textContent = "Paste a GitHub token first.";
+  if (!f.pass && !confirm("No passphrase: anyone with the gist link could read your move details. Continue without encryption?")) return;
+  if (!create && !f.gistId) return msg.textContent = "Enter the gist ID, or use Create on your first device.";
+  msg.textContent = "Connecting...";
+  try {
+    setCfg({ ...f, last: 0 });
+    if (create) {
+      const g = await gh("/gists", { method: "POST", body: JSON.stringify({ description: "Move tracker data (encrypted)", public: false, files: { [GIST_FILE]: { content: await pack(S, f.pass) } } }) });
+      setCfg({ ...f, gistId: g.id, last: Date.now() });
+      msg.textContent = "Created. Gist ID: " + g.id + ". On other devices, use Copy setup link.";
+    } else { msg.textContent = "Connected. Syncing..."; }
+    syncUiState();
+    const ok = await syncNow();
+    if (ok === false && !create) { setCfg(null); syncUiState(); }   /* bad token, gist ID, or passphrase: do not stay half-connected */
+  } catch (e) { setCfg(null); msg.textContent = e.message || String(e); syncUiState(); }
+}
+$("#btnSync").onclick = () => { syncUiState(); $("#syncDlg").showModal(); };
+$("#sy_create").onclick = () => connect(true);
+$("#sy_connect").onclick = () => connect(false);
+$("#sy_now").onclick = async () => { $("#sy_msg").textContent = ""; if (await syncNow()) $("#sy_msg").textContent = "Up to date."; };
+$("#sy_push").onclick = async () => { if (confirm("Overwrite the cloud copy with what is on this device?")) { if (await syncNow("push")) $("#sy_msg").textContent = "Cloud copy replaced."; } };
+$("#sy_pull").onclick = async () => { if (confirm("Overwrite this device with the cloud copy?")) { if (await syncNow("pull")) $("#sy_msg").textContent = "This device replaced from the cloud."; } };
+$("#sy_off").onclick = () => { if (confirm("Disconnect this device? Its token and passphrase are forgotten here; the cloud copy stays.")) { setCfg(null); $("#sy_token").value = $("#sy_pass").value = $("#sy_gist").value = ""; syncUiState(); $("#sy_msg").textContent = "Disconnected."; } };
+$("#sy_link").onclick = () => {
+  const url = location.href.split("#")[0] + "#gist=" + getCfg().gistId;
+  (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(() => $("#sy_msg").textContent = "Setup link copied. It holds the gist ID only; you still enter the token and passphrase on the new device.", () => $("#sy_msg").textContent = url);
+};
+document.addEventListener("visibilitychange", () => { if (!document.hidden) syncNow(); });
+setInterval(() => { if (!document.hidden && getCfg()) syncNow(); }, 90000);
+
+/* ---------- header and render ---------- */
+function renderHeaderSub() {
+  const a = infoVal("old_addr"), b = infoVal("new_addr"), st = infoVal("start");
+  $("#hdrSub").textContent = [a && b ? `${a} → ${b}` : (a || b), st ? `tenancy starts ${st}` : ""].filter(Boolean).join(" · ");
+}
+function renderAll() { fillCatSelects(); renderHeaderSub(); renderDash(); renderTasks(); renderDocs(); renderInfo(); renderGuide(); }
+if (!storageOK) $("#storageWarn").hidden = false;
+seedDefaults(); save(true);
+renderAll();
+syncUiState();
+{ const m = location.hash.match(/gist=([0-9a-f]+)/i); if (m && !getCfg()) { $("#sy_gist").value = m[1]; $("#syncDlg").showModal(); } }
+if (getCfg()) syncNow();
+</script>
+</body>
+</html>
